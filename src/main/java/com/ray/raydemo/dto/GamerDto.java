@@ -6,4 +6,5 @@ import lombok.Data;
 public class GamerDto {
     private String userName;
     private String roleName;
+    private String avatarUrl;
 }
