@@ -1,11 +1,11 @@
 package com.ray.raydemo.controller;
 
+import com.ray.raydemo.Service.CharacterService;
+import com.ray.raydemo.Service.GamerService;
 import com.ray.raydemo.Service.ProfileService;
-import com.ray.raydemo.Service.S3Service;
 import com.ray.raydemo.Service.UserService;
-import com.ray.raydemo.dto.LoginRequest;
-import com.ray.raydemo.dto.LoginResponse;
-import com.ray.raydemo.dto.UserProfileDto;
+import com.ray.raydemo.dto.*;
+import com.ray.raydemo.model.Gamers;
 import com.ray.raydemo.model.User;
 import com.ray.raydemo.security.MyUserDetails;
 import com.ray.raydemo.util.JwtUtil;
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -29,9 +30,10 @@ import java.util.Map;
 public class UserController {
 
     private UserService userService;
+    private CharacterService characterService;
+    private GamerService gamerService;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
-    private final S3Service s3Service;
     private final ProfileService profileService;
 
     @PostMapping("/register")
@@ -87,5 +89,26 @@ public class UserController {
         String imageUrl = profileService.uploadAvatar(userId, userName, file);
 
         return ResponseEntity.ok(Map.of("avatarUrl", imageUrl));
+    }
+
+    @GetMapping("/character")
+    public List<CharacterDTO> getAllRoleNames() {
+        return characterService.getAllCharacters();
+    }
+
+    @GetMapping("/gamers")
+    public List<GamerDto> getAllGamer() {
+        return gamerService.getAllGamers();
+    }
+
+    @PostMapping("/gamers")
+    public ResponseEntity<Gamers> SignInGamer(@RequestBody Gamers gamers) {
+        try {
+            Gamers gamer = gamerService.SignInGamer(gamers);
+            return ResponseEntity.ok(gamer);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 }
