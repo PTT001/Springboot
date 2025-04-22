@@ -10,6 +10,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
 public class UserService {
@@ -32,5 +35,11 @@ public class UserService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         return new UserProfileDto(user.getId(), user.getUsername(), user.getAvatarUrl());
+    }
+
+    public List<UserProfileDto> getAllUsers() {
+        return userRepository.findAll().stream()
+                .map(user -> new UserProfileDto(user.getId(), user.getUsername(), user.getAvatarUrl()))
+                .collect(Collectors.toList());
     }
 }

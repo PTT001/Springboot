@@ -80,6 +80,11 @@ public class UserController {
         return ResponseEntity.ok(profile);
     }
 
+    @GetMapping("/getAllUser")
+    public List<UserProfileDto> getAllUsers() {
+        return userService.getAllUsers();
+    }
+
     @PostMapping("/upload-avatar")
     public ResponseEntity<?> uploadAvatar(@RequestParam("file") MultipartFile file,
                                           @AuthenticationPrincipal MyUserDetails myUserDetails) throws IOException {

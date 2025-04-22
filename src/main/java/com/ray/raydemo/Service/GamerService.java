@@ -1,13 +1,10 @@
 package com.ray.raydemo.Service;
 
-import com.ray.raydemo.dto.CharacterDTO;
 import com.ray.raydemo.dto.GamerDto;
-import com.ray.raydemo.model.Characters;
 import com.ray.raydemo.model.Gamers;
 import com.ray.raydemo.model.User;
 import com.ray.raydemo.repository.GamerRepository;
 import com.ray.raydemo.repository.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
