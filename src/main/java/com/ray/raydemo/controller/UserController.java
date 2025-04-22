@@ -111,4 +111,15 @@ public class UserController {
             return ResponseEntity.badRequest().body(null);
         }
     }
+
+    @DeleteMapping("/gamers/{username}")
+    public ResponseEntity<Void> deleteGamer(@PathVariable String username) {
+        try {
+            gamerService.deleteGamer(username);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }

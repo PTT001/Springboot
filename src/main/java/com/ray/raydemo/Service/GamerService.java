@@ -7,9 +7,11 @@ import com.ray.raydemo.model.Gamers;
 import com.ray.raydemo.model.User;
 import com.ray.raydemo.repository.GamerRepository;
 import com.ray.raydemo.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,6 +30,11 @@ public class GamerService {
 
     public Gamers SignInGamer(Gamers gamer) {
         return gamerRepository.save(gamer);
+    }
+
+    @Transactional
+    public void deleteGamer(String username) {
+        gamerRepository.deleteByUsername(username);
     }
 
     private GamerDto convertToDTO(Gamers gamers) {
