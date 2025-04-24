@@ -8,24 +8,22 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-@Table(name = "users")
-public class User {
-
+@Table(name = "messages")
+public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String username;
 
     @Column(nullable = false)
-    private String password;
-
-    private String email;
-
-    private String avatarUrl;
+    private String message;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 }
+
+
+

@@ -1,11 +1,10 @@
 package com.ray.raydemo.controller;
 
-import com.ray.raydemo.Service.CharacterService;
-import com.ray.raydemo.Service.GamerService;
-import com.ray.raydemo.Service.ProfileService;
-import com.ray.raydemo.Service.UserService;
+import com.ray.raydemo.Service.*;
 import com.ray.raydemo.dto.*;
+import com.ray.raydemo.model.GameRecord;
 import com.ray.raydemo.model.Gamers;
+import com.ray.raydemo.model.Message;
 import com.ray.raydemo.model.User;
 import com.ray.raydemo.security.MyUserDetails;
 import com.ray.raydemo.util.JwtUtil;
@@ -29,12 +28,13 @@ import java.util.Map;
 @AllArgsConstructor
 public class UserController {
 
-    private UserService userService;
-    private CharacterService characterService;
-    private GamerService gamerService;
+    private final UserService userService;
+    private final GamerService gamerService;
+    private final ProfileService profileService;
+    private final GameRecordService gameRecordService;
+    private final MessageService messageService;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
-    private final ProfileService profileService;
 
     @PostMapping("/register")
     public ResponseEntity<User> registerUser(@RequestBody User user) {
@@ -96,11 +96,6 @@ public class UserController {
         return ResponseEntity.ok(Map.of("avatarUrl", imageUrl));
     }
 
-    @GetMapping("/character")
-    public List<CharacterDTO> getAllRoleNames() {
-        return characterService.getAllCharacters();
-    }
-
     @GetMapping("/gamers")
     public List<GamerDto> getAllGamer() {
         return gamerService.getAllGamers();
@@ -126,5 +121,25 @@ public class UserController {
             System.out.println(e.getMessage());
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @PostMapping("/game-records")
+    public GameRecord createGameRecord(@RequestBody GameRecord gameRecord) {
+        return gameRecordService.saveGameRecord(gameRecord);
+    }
+
+    @GetMapping("/game-records")
+    public List<GameRecord> getAllRecord() {
+        return gameRecordService.findAllGameRecords();
+    }
+
+    @PostMapping("/message")
+    public Message createMessage(@RequestBody Message message) {
+        return messageService.saveMessage(message);
+    }
+
+    @GetMapping("/message")
+    public List<Message> getAllMessage() {
+        return messageService.findAllMessages();
     }
 }
