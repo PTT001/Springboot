@@ -63,4 +63,4 @@ jobs:
             # 拉取最新映像
             docker pull ptt001/springboot:latest
             # 運行新容器
-            docker run -d --name ptt001/springboot -p 8080:8080 ptt001/springboot:latest
+            docker run -d --name springboot -p 8080:8080 ptt001/springboot:latest
