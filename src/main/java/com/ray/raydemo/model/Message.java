@@ -20,7 +20,6 @@ public class Message {
     @Column(nullable = false)
     private String message;
 
-    @Column(nullable = false)
     private String avatarUrl;
 
     @CreationTimestamp
