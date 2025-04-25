@@ -49,7 +49,19 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            # 停止所有綁定 8080 端口的容器
+            docker ps -q --filter "publish=8080" | xargs -r docker stop
+            # 移除所有綁定 8080 端口的容器
+            docker ps -a -q --filter "publish=8080" | xargs -r docker rm
+            # 確保停止並移除名為 ptt001 和 springboot 的容器
+            docker stop ptt001/springboot || true
+            docker rm ptt001/springboot || true
+            # 檢查 8080 端口是否被占用
+            if [ -n "$(netstat -tulnp 2>/dev/null | grep 8080)" ]; then
+              echo "Error: Port 8080 is still in use!"
+              exit 1
+            fi
+            # 拉取最新映像
             docker pull ptt001/springboot:latest
-            docker stop ptt001-springboot || true
-            docker rm ptt001-springboot || true
+            # 運行新容器
             docker run -d --name springboot -p 8080:8080 ptt001/springboot:latest
