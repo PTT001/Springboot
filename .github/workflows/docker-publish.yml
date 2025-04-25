@@ -53,7 +53,6 @@ jobs:
             docker ps -q --filter "publish=8080" | xargs -r docker stop
             # 移除所有綁定 8080 端口的容器
             docker ps -a -q --filter "publish=8080" | xargs -r docker rm
-            # 確保停止並移除名為 ptt001 和 springboot 的容器
             docker stop ptt001/springboot || true
             docker rm ptt001/springboot || true
             # 檢查 8080 端口是否被占用
@@ -64,4 +63,4 @@ jobs:
             # 拉取最新映像
             docker pull ptt001/springboot:latest
             # 運行新容器
-            docker run -d --name springboot -p 8080:8080 ptt001/springboot:latest
+            docker run -d --name ptt001/springboot -p 8080:8080 ptt001/springboot:latest
