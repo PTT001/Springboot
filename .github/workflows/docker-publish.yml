@@ -50,6 +50,6 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             docker pull ptt001/springboot:latest
-            docker stop springboot || true
-            docker rm springboot || true
+            docker stop ptt001-springboot || true
+            docker rm ptt001-springboot || true
             docker run -d --name springboot -p 8080:8080 ptt001/springboot:latest
