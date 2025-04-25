@@ -1,13 +1,9 @@
 package com.ray.raydemo.Service;
 
-import com.ray.raydemo.model.GameRecord;
 import com.ray.raydemo.model.Message;
-import com.ray.raydemo.model.User;
-import com.ray.raydemo.repository.GameRecordRepository;
 import com.ray.raydemo.repository.MessageRepository;
 import com.ray.raydemo.repository.UserRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

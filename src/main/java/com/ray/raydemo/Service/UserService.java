@@ -1,6 +1,5 @@
 package com.ray.raydemo.Service;
 
-import com.ray.raydemo.dto.LoginResponse;
 import com.ray.raydemo.dto.UserProfileDto;
 import com.ray.raydemo.model.User;
 import com.ray.raydemo.repository.UserRepository;
@@ -19,7 +18,6 @@ public class UserService {
 
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
-    private final JwtUtil jwtUtil;
 
     public User registerUser(User user) {
         if (userRepository.findByUsername(user.getUsername()).isPresent()) {
