@@ -42,4 +42,12 @@ public class UserService {
                 .map(user -> new UserProfileDto(user.getId(), user.getUsername(), user.getAvatarUrl()))
                 .collect(Collectors.toList());
     }
+
+    public void changePassword(String username, String newPassword) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("找不到用戶"));
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+    }
 }

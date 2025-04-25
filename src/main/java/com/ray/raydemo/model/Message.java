@@ -20,6 +20,9 @@ public class Message {
     @Column(nullable = false)
     private String message;
 
+    @Column(nullable = false)
+    private String avatarUrl;
+
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

@@ -68,7 +68,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/getProfile")
+    @GetMapping("/Profile")
     public ResponseEntity<UserProfileDto> getProfile() {
         // 從SecurityContext取得目前登入的使用者名稱
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -78,6 +78,15 @@ public class UserController {
         UserProfileDto profile = userService.getUserProfileByUsername(username);
 
         return ResponseEntity.ok(profile);
+    }
+
+    @PostMapping("/Profile")
+    public ResponseEntity<String> changePassword(@RequestBody LoginRequest loginRequest) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        userService.changePassword(username, loginRequest.getPassword());
+        return ResponseEntity.ok("密碼更改成功");
     }
 
     @GetMapping("/getAllUser")
